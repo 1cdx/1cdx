@@ -1,0 +1,104 @@
+{
+  "languages": [
+    {
+      "name": "go",
+      "scopeName": "source.go",
+      "grammar": "textmate/go/go.tmLanguage.json",
+      "languageConfiguration": "textmate/go/language-configuration.json"
+    },
+    {
+      "name": "python",
+      "scopeName": "source.python",
+      "grammar": "textmate/python/MagicPython.tmLanguage.json",
+      "languageConfiguration": "textmate/python/language-configuration.json"
+    },
+    {
+      "name": "rust",
+      "scopeName": "source.rust",
+      "grammar": "textmate/rust/rust.tmLanguage.json",
+      "languageConfiguration": "textmate/rust/language-configuration.json"
+    },
+    {
+      "name": "javascript",
+      "scopeName": "source.js",
+      "grammar": "textmate/javascript/JavaScript.tmLanguage.json",
+      "languageConfiguration": "textmate/javascript/language-configuration.json"
+    },
+    {
+      "name": "typescript",
+      "scopeName": "source.ts",
+      "grammar": "textmate/typescript/TypeScript.tmLanguage.json",
+      "languageConfiguration": "textmate/typescript/language-configuration.json"
+    },
+    {
+      "name": "css",
+      "scopeName": "source.css",
+      "grammar": "textmate/css/css.tmLanguage.json",
+      "languageConfiguration": "textmate/css/language-configuration.json"
+    },
+    {
+      "name": "html",
+      "scopeName": "text.html.basic",
+      "grammar": "textmate/html/html.tmLanguage.json",
+      "languageConfiguration": "textmate/html/language-configuration.json",
+      "embeddedLanguages": {
+        "source.js": "javascript",
+        "source.css": "css"
+      }
+    },
+    {
+      "name": "json",
+      "scopeName": "source.json",
+      "grammar": "textmate/json/JSON.tmLanguage.json",
+      "languageConfiguration": "textmate/json/language-configuration.json"
+    },
+    {
+      "name": "sql",
+      "scopeName": "source.sql",
+      "grammar": "textmate/sql/sql.tmLanguage.json",
+      "languageConfiguration": "textmate/sql/language-configuration.json"
+    },
+    {
+      "name": "shellscript",
+      "scopeName": "source.shell",
+      "grammar": "textmate/shellscript/shell-unix-bash.tmLanguage.json",
+      "languageConfiguration": "textmate/shellscript/language-configuration.json"
+    },
+    {
+      "name": "java",
+      "scopeName": "source.java",
+      "grammar": "textmate/java/java.tmLanguage.json",
+      "languageConfiguration": "textmate/java/language-configuration.json"
+    },
+    {
+      "name": "markdown",
+      "scopeName": "text.html.markdown",
+      "grammar": "textmate/markdown/markdown.tmLanguage.json",
+      "languageConfiguration": "textmate/markdown/language-configuration.json",
+      "embeddedLanguages": {
+        "source.js": "javascript",
+        "source.css": "css",
+        "source.python": "python",
+        "source.go": "go",
+        "source.rust": "rust",
+        "source.ts": "typescript",
+        "source.json": "json",
+        "source.shell": "shellscript",
+        "source.sql": "sql",
+        "source.java": "java",
+        "text.html.basic": "html"
+      }
+    },
+    {
+      "name": "kotlin",
+      "scopeName": "source.kotlin",
+      "grammar": "textmate/kotlin/Kotlin.tmLanguage",
+      "languageConfiguration": "textmate/kotlin/language-configuration.json"
+    },
+    {
+      "name": "xml",
+      "scopeName": "text.xml",
+      "grammar": "textmate/xml/xml.tmLanguage.json"
+    }
+  ]
+}

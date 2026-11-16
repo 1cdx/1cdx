@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <layer-list>
+            <item android:drawable="@color/bg_editor" />
+            <item android:gravity="top" android:height="1dp" android:drawable="@color/accent" />
+        </layer-list>
+    </item>
+    <item android:state_hovered="true" android:drawable="@color/bg_hover" />
+    <item android:drawable="@color/bg_tabbar" />
+</selector>
