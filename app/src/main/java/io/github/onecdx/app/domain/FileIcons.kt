@@ -20,7 +20,7 @@ object FileIcons {
         "css" to FileIcon("#", 0xFF42A5F5), "scss" to FileIcon("#", 0xFFCD6799),
         "json" to FileIcon("{}", 0xFFCBCB41),
         "sql" to FileIcon("DB", 0xFFDAD8D8),
-        "sh" to FileIcon("$_", 0xFF89E051), "bash" to FileIcon("$_", 0xFF89E051), "zsh" to FileIcon("$_", 0xFF89E051),
+        "sh" to FileIcon("\$_", 0xFF89E051), "bash" to FileIcon("\$_", 0xFF89E051), "zsh" to FileIcon("\$_", 0xFF89E051),
         "md" to FileIcon("M↓", 0xFF519ABA),
         "xml" to FileIcon("<>", 0xFFE37933), "svg" to FileIcon("SVG", 0xFFFFB13B),
         "yml" to FileIcon("YML", 0xFFCB171E), "yaml" to FileIcon("YML", 0xFFCB171E),
