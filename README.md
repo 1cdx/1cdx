@@ -102,3 +102,21 @@ Membangun aplikasi *code editor* Android *native* berbasis **Kotlin** yang ringa
 2. Proses simpan dan unggah file kode (< 500 KB) melalui SFTP selesai dalam waktu < 1 detik pada koneksi internet normal, tanpa menyebabkan *UI freeze*.
 3. Tidak ada kredensial server atau *private key* yang disimpan dalam bentuk *plain text* di penyimpanan perangkat.
 4. Jika koneksi internet terputus sementara saat mengedit, perubahan tetap tersimpan aman di cache lokal dan aplikasi berhasil melakukan *auto-reconnect* serta mengunggah ulang saat tombol simpan ditekan kembali.
+
+---
+
+## 8. Build & Rilis Otomatis
+
+* **Unduh APK terbaru:** <https://github.com/1cdx/1cdx/releases/latest/download/1cdx.apk>
+* Workflow `.github/workflows/release.yml` berjalan setiap push ke `main` (perubahan yang hanya menyentuh `*.md`/`LICENSE` diabaikan):
+  1. Menentukan versi berikutnya dari tag `vX.Y.Z` terakhir (default naik *patch*; tulis `[minor]` atau `[major]` di pesan commit untuk naik level lain, `[skip release]` untuk melewati rilis).
+  2. Build `assembleRelease` dengan `versionName = X.Y.Z` dan `versionCode = X*1000000 + Y*1000 + Z`.
+  3. Menandatangani APK dengan keystore dari GitHub Secrets, lalu membuat tag + GitHub Release berisi `1cdx.apk`, `1cdx-vX.Y.Z.apk`, dan `SHA256SUMS.txt`.
+* **Secret yang dibutuhkan** (Settings → Secrets and variables → Actions): `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
+* Keystore **harus selalu sama** antar rilis; jika hilang/berganti, pengguna tidak bisa meng-*update* aplikasi tanpa uninstall.
+
+Build lokal (butuh Android SDK, JDK 17+):
+
+```bash
+./gradlew :app:assembleDebug
+```

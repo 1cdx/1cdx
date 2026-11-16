@@ -25,3 +25,22 @@ replay_pid*
 
 # Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
 .kotlin/
+# Gradle wrapper wajib di-commit
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+.idea/
+*.iml
+
+# Signing (jangan pernah commit keystore)
+*.jks
+*.keystore
+*.p12
