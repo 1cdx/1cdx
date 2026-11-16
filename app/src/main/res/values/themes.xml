@@ -31,7 +31,7 @@
         <item name="android:background">@drawable/bg_row</item>
     </style>
 
-    <style name="Onecdx.Input">
+    <style name="Onecdx.Input" parent="">
         <item name="android:background">@drawable/bg_input</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textColorHint">@color/text_muted</item>
@@ -43,7 +43,7 @@
         <item name="android:importantForAutofill">no</item>
     </style>
 
-    <style name="Onecdx.StatusItem">
+    <style name="Onecdx.StatusItem" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center_vertical</item>
