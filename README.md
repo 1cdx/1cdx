@@ -133,10 +133,21 @@ python3 tools/fetch_textmate.py app/src/main/assets/textmate
 
 ## 9. Status Implementasi
 
-### Milestone 1 — selesai di branch `milestone-1`
+### Milestone 1 — selesai (v0.2.0)
 * `sora-editor` + tema VS Code Dark+ + grammar TextMate: Go, Python, Rust, Kotlin, Java, JavaScript, TypeScript, HTML, CSS, JSON, SQL, Shell, Markdown, XML.
 * Workspace folder lokal lewat Storage Access Framework (folder terakhir dibuka ulang otomatis), explorer dengan *lazy loading* per folder, ikon per ekstensi, menu klik kanan (Buka / Refresh / Salin path).
 * Multi-tab: riwayat undo, kursor, dan posisi scroll per tab tetap terjaga; indikator `●` untuk perubahan belum disimpan; konfirmasi saat menutup tab atau keluar.
 * Layout split-pane: sidebar dan panel Output bawah bisa di-resize dengan drag (ukuran diingat), status bar (folder, status simpan, Ln/Col, bahasa).
 * Shortcut: `Ctrl+S` simpan, `Ctrl+B` sidebar, `Ctrl+W` tutup tab, `Ctrl+P` quick open, `Ctrl+F` cari, `Ctrl+H` ganti, ``Ctrl+` `` panel, `Ctrl+O` buka folder, `Ctrl+Tab` / `Ctrl+Shift+Tab` / `Ctrl+PgUp/PgDn` pindah tab, `Esc` tutup pencarian.
-* Penyimpanan Milestone 1 masih ke file lokal; SFTP menyusul di Milestone 2 lewat implementasi `WorkspaceRepository` yang sama.
+* Workspace lokal tetap tersedia; SFTP (Milestone 2) memakai kontrak `WorkspaceRepository` yang sama.
+
+### Milestone 2 — SFTP Engine & Sync Workflow
+* **Connection Manager** (`Ctrl+Shift+O`, ikon server di explorer): tambah, edit, duplikat, hapus profil; parameter nama, host, port, username, password atau SSH private key (`id_ed25519`, `id_rsa`, `.pem`, format OpenSSH/PEM) + passphrase, dan default remote path (kosong/`~` = home). Tombol **Test Connection** sebelum menyimpan.
+* **Kredensial terenkripsi**: seluruh profil (password, private key, passphrase, host key) disimpan di satu file AES-256-GCM dengan kunci di Android Keystore. Tidak ada kredensial plain text; `allowBackup=false`.
+* **Verifikasi host key (trust on first use)**: fingerprint `SHA256:` ditampilkan saat pertama kali terhubung dan harus dikonfirmasi; host key yang berubah selalu ditolak dengan peringatan MITM.
+* **Remote explorer**: *lazy loading* per folder (`ls` hanya saat folder dibuka), symlink diikuti, menu klik kanan: File baru, Folder baru, Ganti nama, Hapus (konfirmasi, rekursif tanpa mengikuti symlink), Refresh, Salin path remote. Operasi yang sama juga berlaku untuk folder lokal.
+* **Download-to-cache & Auto-Upload on Save**: file diunduh ke `cacheDir/sftp_workspaces/<server_id>/<remote_path>`; `Ctrl+S` menulis ke cache dulu lalu upload dengan `put(..., OVERWRITE)`. Status bar: `⇅ Connected: user@host`, `⟳ Syncing…` → `Uploaded ✓`, atau peringatan merah bila upload gagal.
+* **Offline aman**: bila upload gagal, file ditandai *pending* dan versi cache tidak tertimpa unduhan berikutnya (tetap bisa dibuka tanpa koneksi); tab tetap bertanda `●` dan `Ctrl+S` berikutnya mengunggah ulang.
+* **Auto-reconnect**: keep-alive 15 detik × 3; setiap perintah SFTP melewati `ensureConnected()` dan diulang sekali setelah sambung ulang bila koneksi putus (layar redup, pindah jaringan).
+* Workspace SFTP terakhir disambungkan ulang otomatis saat aplikasi dibuka.
+* Diuji end-to-end di CI terhadap server SSH sungguhan (Apache MINA SSHD): host key baru/berubah, password salah, key ed25519 OpenSSH (polos & ber-passphrase), RSA PEM ber-passphrase, operasi file, upload gagal → sinkron setelah server kembali, dan reconnect setelah koneksi putus. Algoritma JSch dipaksa ke jalur BouncyCastle seperti di Android.

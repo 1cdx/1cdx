@@ -144,7 +144,7 @@ class SftpConnection(profile: ServerProfile) {
             "PreferredAuthentications",
             if (p.auth == AuthMethod.KEY) "publickey" else "password,keyboard-interactive",
         )
-        if (p.auth == AuthMethod.PASSWORD) s.setPassword(p.password.orEmpty())
+        if (p.auth == AuthMethod.PASSWORD) s.setPassword(p.password.orEmpty().toByteArray(Charsets.UTF_8))
         s.setUserInfo(SilentUserInfo(if (p.auth == AuthMethod.PASSWORD) p.password else null))
         s.setServerAliveInterval(KEEP_ALIVE_MS)
         s.setServerAliveCountMax(KEEP_ALIVE_COUNT)
