@@ -81,6 +81,13 @@ print("kotlin       source.kotlin")
 # XML grammar (no language-configuration upstream)
 d = os.path.join(OUT, "xml"); os.makedirs(d, exist_ok=True)
 g = json.loads(raw("microsoft/vscode", VSC, "extensions/xml/syntaxes/xml.tmLanguage.json"))
+# Bug upstream: pada aturan komentar `<%--`, "end" dan "name" tersarang di dalam "captures".
+# VS Code mengabaikannya, tm4e melempar ClassCastException. Pindahkan ke level aturan.
+for rule in g["repository"]["comments"]["patterns"]:
+    caps = rule.get("captures", {})
+    for key in ("end", "name"):
+        if isinstance(caps.get(key), str):
+            rule[key] = caps.pop(key)
 with open(os.path.join(d, "xml.tmLanguage.json"), "w") as f: json.dump(g, f, separators=(",", ":"))
 languages.append({"name": "xml", "scopeName": g["scopeName"], "grammar": "textmate/xml/xml.tmLanguage.json"})
 print(f"xml          {g['scopeName']}")
