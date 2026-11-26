@@ -1,4 +1,32 @@
 <resources>
-    <string name="app_name">1cdx</string>
-    <string name="placeholder">1cdx %1$s\nCode editor + SFTP untuk Samsung DeX\n(dalam pengembangan)</string>
+    <string name="explorer">EXPLORER</string>
+    <string name="no_folder">Belum ada folder yang dibuka</string>
+    <string name="open_folder">Buka Folder</string>
+    <string name="open_folder_hint">Buka folder proyek untuk mulai mengedit.</string>
+    <string name="welcome_title">1cdx</string>
+    <string name="welcome_subtitle">Code editor ringan untuk Samsung DeX</string>
+    <string name="welcome_shortcuts">Ctrl+O  Buka folder\nCtrl+P  Cari file\nCtrl+S  Simpan\nCtrl+F  Cari · Ctrl+H  Ganti\nCtrl+B  Explorer · Ctrl+`  Panel output\nCtrl+W  Tutup tab · Ctrl+Tab  Tab berikutnya</string>
+    <string name="output">OUTPUT</string>
+    <string name="close">Tutup</string>
+    <string name="find_hint">Cari</string>
+    <string name="replace_hint">Ganti dengan</string>
+    <string name="replace_one">Ganti</string>
+    <string name="replace_all">Ganti semua</string>
+    <string name="quick_open_hint">Ketik nama file…</string>
+    <string name="quick_open_empty">Tidak ada file yang cocok. Hanya folder yang sudah dibuka di explorer yang dicari.</string>
+    <string name="unsaved_title">Simpan perubahan?</string>
+    <string name="unsaved_message">%1$s punya perubahan yang belum disimpan.</string>
+    <string name="save">Simpan</string>
+    <string name="dont_save">Jangan simpan</string>
+    <string name="cancel">Batal</string>
+    <string name="menu_open">Buka</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_copy_path">Salin path</string>
+    <string name="menu_close_others">Tutup tab lain</string>
+    <string name="path_copied">Path disalin</string>
+    <string name="toggle_replace">Tampilkan kolom ganti</string>
+    <string name="match_case">Cocokkan huruf besar/kecil</string>
+    <string name="use_regex">Gunakan regex</string>
+    <string name="previous_match">Hasil sebelumnya</string>
+    <string name="next_match">Hasil berikutnya</string>
 </resources>

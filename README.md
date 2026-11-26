@@ -115,8 +115,28 @@ Membangun aplikasi *code editor* Android *native* berbasis **Kotlin** yang ringa
 * **Secret yang dibutuhkan** (Settings → Secrets and variables → Actions): `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_PASSWORD`; serta **variable** `ANDROID_KEY_ALIAS`.
 * Keystore **harus selalu sama** antar rilis; jika hilang/berganti, pengguna tidak bisa meng-*update* aplikasi tanpa uninstall.
 
+* Branch selain `main` dan pull request menjalankan `.github/workflows/build.yml`: unit test + build debug & release **tanpa** membuat rilis. APK debug (`io.github.onecdx.app.debug`, bisa terpasang berdampingan dengan versi rilis) tersedia sebagai *artifact* di halaman run Actions.
+
 Build lokal (butuh Android SDK, JDK 17+):
 
 ```bash
-./gradlew :app:assembleDebug
+./gradlew :app:testDebugUnitTest :app:assembleDebug
 ```
+
+Aset grammar/tema TextMate di `app/src/main/assets/textmate/` dibuat ulang dengan:
+
+```bash
+python3 tools/fetch_textmate.py app/src/main/assets/textmate
+```
+
+---
+
+## 9. Status Implementasi
+
+### Milestone 1 — selesai di branch `milestone-1`
+* `sora-editor` + tema VS Code Dark+ + grammar TextMate: Go, Python, Rust, Kotlin, Java, JavaScript, TypeScript, HTML, CSS, JSON, SQL, Shell, Markdown, XML.
+* Workspace folder lokal lewat Storage Access Framework (folder terakhir dibuka ulang otomatis), explorer dengan *lazy loading* per folder, ikon per ekstensi, menu klik kanan (Buka / Refresh / Salin path).
+* Multi-tab: riwayat undo, kursor, dan posisi scroll per tab tetap terjaga; indikator `●` untuk perubahan belum disimpan; konfirmasi saat menutup tab atau keluar.
+* Layout split-pane: sidebar dan panel Output bawah bisa di-resize dengan drag (ukuran diingat), status bar (folder, status simpan, Ln/Col, bahasa).
+* Shortcut: `Ctrl+S` simpan, `Ctrl+B` sidebar, `Ctrl+W` tutup tab, `Ctrl+P` quick open, `Ctrl+F` cari, `Ctrl+H` ganti, ``Ctrl+` `` panel, `Ctrl+O` buka folder, `Ctrl+Tab` / `Ctrl+Shift+Tab` / `Ctrl+PgUp/PgDn` pindah tab, `Esc` tutup pencarian.
+* Penyimpanan Milestone 1 masih ke file lokal; SFTP menyusul di Milestone 2 lewat implementasi `WorkspaceRepository` yang sama.

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_sidebar"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/workbench"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Sidebar: File Explorer -->
+        <LinearLayout
+            android:id="@+id/sidebar"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_sidebar"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="8dp"
+                android:text="@string/explorer"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/workspace_title"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:background="@drawable/bg_row"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:singleLine="true"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="▾ MY-PROJECT" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/file_tree"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="8dp"
+                    android:scrollbars="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/explorer_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/open_folder_hint"
+                        android:textColor="@color/text_muted"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/explorer_open_folder"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_button_primary"
+                        android:stateListAnimator="@null"
+                        android:text="@string/open_folder"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_bright"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/sidebar_divider"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_divider" />
+
+        <!-- Area editor -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/bg_editor"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/bg_tabbar"
+                android:scrollbars="none" />
+
+            <!-- Find & Replace -->
+            <LinearLayout
+                android:id="@+id/find_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_tab_inactive"
+                android:orientation="vertical"
+                android:paddingStart="6dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="4dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/find_toggle_replace"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:contentDescription="@string/toggle_replace"
+                        android:gravity="center"
+                        android:text="›" />
+
+                    <EditText
+                        android:id="@+id/find_input"
+                        style="@style/Onecdx.Input"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/find_hint"
+                        android:imeOptions="actionSearch|flagNoExtractUi"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:id="@+id/find_case"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_toggle"
+                        android:contentDescription="@string/match_case"
+                        android:gravity="center"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:text="Aa"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/find_regex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="2dp"
+                        android:background="@drawable/bg_toggle"
+                        android:contentDescription="@string/use_regex"
+                        android:fontFamily="monospace"
+                        android:gravity="center"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:text=".*"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/find_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:minWidth="64dp"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/find_prev"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:contentDescription="@string/previous_match"
+                        android:gravity="center"
+                        android:text="↑" />
+
+                    <TextView
+                        android:id="@+id/find_next"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:contentDescription="@string/next_match"
+                        android:gravity="center"
+                        android:text="↓" />
+
+                    <TextView
+                        android:id="@+id/find_close"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:contentDescription="@string/close"
+                        android:gravity="center"
+                        android:text="✕" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/replace_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="32dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/replace_input"
+                        style="@style/Onecdx.Input"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/replace_hint"
+                        android:imeOptions="actionDone|flagNoExtractUi"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:id="@+id/replace_one"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        android:text="@string/replace_one" />
+
+                    <TextView
+                        android:id="@+id/replace_all"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:gravity="center"
+                        android:text="@string/replace_all" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <io.github.rosemoe.sora.widget.CodeEditor
+                    android:id="@+id/editor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/welcome"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="@string/welcome_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/welcome_subtitle"
+                        android:textColor="@color/text_muted"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/welcome_open_folder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/bg_button_primary"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/open_folder"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_bright"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:fontFamily="monospace"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/welcome_shortcuts"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Panel bawah (Output; terminal SSH menyusul di Milestone 3) -->
+            <View
+                android:id="@+id/panel_divider"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_divider"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/panel"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/bg_panel"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/output"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/panel_close"
+                        style="@style/Onecdx.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:contentDescription="@string/close"
+                        android:gravity="center"
+                        android:text="✕" />
+                </LinearLayout>
+
+                <ScrollView
+                    android:id="@+id/log_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fillViewport="true">
+
+                    <TextView
+                        android:id="@+id/log_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/text_primary"
+                        android:textIsSelectable="true"
+                        android:textSize="12sp" />
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Status bar -->
+    <LinearLayout
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/statusbar_empty"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/status_workspace"
+            style="@style/Onecdx.StatusItem"
+            android:ellipsize="end"
+            android:maxWidth="320dp" />
+
+        <TextView
+            android:id="@+id/status_save"
+            style="@style/Onecdx.StatusItem"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/status_cursor"
+            style="@style/Onecdx.StatusItem" />
+
+        <TextView
+            android:id="@+id/status_indent"
+            style="@style/Onecdx.StatusItem" />
+
+        <TextView
+            android:id="@+id/status_encoding"
+            style="@style/Onecdx.StatusItem" />
+
+        <TextView
+            android:id="@+id/status_language"
+            style="@style/Onecdx.StatusItem"
+            android:paddingEnd="12dp" />
+    </LinearLayout>
+</LinearLayout>
