@@ -51,6 +51,11 @@ android {
         }
     }
 
+    testOptions {
+        // tm4e/sora memanggil android.util.Log; di unit test JVM kembalikan nilai default.
+        unitTests.isReturnDefaultValues = true
+    }
+
     buildFeatures {
         viewBinding = true
         resValues = true
