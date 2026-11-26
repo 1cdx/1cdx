@@ -14,6 +14,7 @@ object RemotePath {
         val trimmed = path.trimEnd('/')
         val index = trimmed.lastIndexOf('/')
         return when {
+            trimmed.isEmpty() && path.startsWith("/") -> "/"
             index < 0 -> ""
             index == 0 -> "/"
             else -> trimmed.substring(0, index)

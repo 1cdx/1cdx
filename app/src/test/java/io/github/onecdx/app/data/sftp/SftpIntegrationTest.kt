@@ -218,16 +218,24 @@ class SftpIntegrationTest {
         assertEquals(listOf("a.txt"), repo.list(repo.root).map { it.name })
     }
 
+    private fun resourceKey(name: String): String =
+        javaClass.getResourceAsStream("/keys/$name")!!.use { it.readBytes().toString(Charsets.UTF_8) }
+
+    /** Key format OpenSSH dari ssh-keygen, seperti ~/.ssh/id_ed25519 milik pengguna. */
     @Test
-    fun ed25519KeyAuthentication() = runBlocking {
+    fun ed25519OpenSshKeyAuthentication() {
         val key = trustedHostKey()
-        val pair = KeyPair.genKeyPair(JSch(), KeyPair.ED25519)
-        val pem = ByteArrayOutputStream().also { pair.writePrivateKey(it) }.toString(Charsets.UTF_8.name())
-        pair.dispose()
-        val repo = openRepo(
-            profile(hostKey = key).copy(auth = AuthMethod.KEY, password = null, privateKey = pem),
-        )
-        assertEquals("/", repo.root.id)
+        val base = profile(hostKey = key).copy(auth = AuthMethod.KEY, password = null)
+        assertEquals("/", openRepo(base.copy(privateKey = resourceKey("id_ed25519_test"))).root.id)
+
+        val encrypted = base.copy(privateKey = resourceKey("id_ed25519_test_encrypted"))
+        try {
+            openRepo(encrypted.copy(passphrase = "keliru"))
+            fail("Passphrase salah harus gagal")
+        } catch (e: SftpOperationException) {
+            assertTrue(e.message, e.message!!.contains("Passphrase private key salah"))
+        }
+        assertEquals("/", openRepo(encrypted.copy(passphrase = "rahasia")).root.id)
     }
 
     @Test
