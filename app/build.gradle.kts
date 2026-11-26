@@ -69,6 +69,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // JSch & BouncyCastle: multi-release jar dengan manifest OSGi per versi Java (bentrok saat dipaketkan)
+            excludes += "/META-INF/versions/*/OSGI-INF/MANIFEST.MF"
         }
     }
 }
@@ -89,8 +91,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.recyclerview)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.jsch)
+    // JSch memakai jalur BouncyCastle untuk ed25519/curve25519/ML-KEM di Android
+    implementation(libs.bouncycastle.bcprov)
+    implementation(libs.gson)
 
     testImplementation(libs.junit)
+    // Server SSH/SFTP sungguhan di JVM untuk menguji SftpConnection & SftpWorkspaceRepository di CI
+    testImplementation(libs.sshd.core)
+    testImplementation(libs.sshd.sftp)
+    testImplementation(libs.eddsa)
+    testImplementation(libs.slf4j.nop)
 }
 
 tasks.withType<Test>().configureEach {

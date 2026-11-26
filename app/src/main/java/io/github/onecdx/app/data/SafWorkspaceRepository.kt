@@ -4,10 +4,14 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.provider.DocumentsContract.Document
+import io.github.onecdx.app.domain.ConnectionState
 import io.github.onecdx.app.domain.FileEntry
 import io.github.onecdx.app.domain.WorkspaceRepository
+import io.github.onecdx.app.domain.childPath
 import io.github.onecdx.app.domain.sortEntries
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -25,6 +29,8 @@ class SafWorkspaceRepository(
 
     override val root: FileEntry
     override val location: String = treeUri.toString()
+    override val isRemote = false
+    override val connection: StateFlow<ConnectionState> = MutableStateFlow(ConnectionState.Local)
 
     init {
         val rootDocId = DocumentsContract.getTreeDocumentId(treeUri)
@@ -54,8 +60,7 @@ class SafWorkspaceRepository(
                 val name = c.getString(1) ?: continue
                 val isDirectory = c.getString(2) == Document.MIME_TYPE_DIR
                 val size = if (c.isNull(3)) 0L else c.getLong(3)
-                val path = if (directory.path.isEmpty()) name else "${directory.path}/$name"
-                entries += FileEntry(id, name, isDirectory, size, path)
+                entries += FileEntry(id, name, isDirectory, size, childPath(directory, name))
             }
         }
         sortEntries(entries)
@@ -69,6 +74,39 @@ class SafWorkspaceRepository(
 
     override suspend fun writeText(file: FileEntry, text: String) = withContext(Dispatchers.IO) {
         openForOverwrite(documentUri(file)).use { it.write(text.toByteArray(Charsets.UTF_8)) }
+    }
+
+    override suspend fun createFile(parent: FileEntry, name: String): FileEntry =
+        create(parent, name, isDirectory = false)
+
+    override suspend fun createDirectory(parent: FileEntry, name: String): FileEntry =
+        create(parent, name, isDirectory = true)
+
+    private suspend fun create(parent: FileEntry, name: String, isDirectory: Boolean): FileEntry {
+        if (list(parent).any { it.name == name }) throw IOException("\"$name\" sudah ada")
+        return withContext(Dispatchers.IO) {
+            // octet-stream: provider tidak menambahkan ekstensi otomatis (mis. ".txt")
+            val mime = if (isDirectory) Document.MIME_TYPE_DIR else "application/octet-stream"
+            val uri = DocumentsContract.createDocument(resolver, documentUri(parent), mime, name)
+                ?: throw IOException("Tidak bisa membuat $name")
+            val id = DocumentsContract.getDocumentId(uri)
+            val actualName = queryDisplayName(id) ?: name
+            FileEntry(id, actualName, isDirectory, 0, childPath(parent, actualName))
+        }
+    }
+
+    override suspend fun rename(entry: FileEntry, newName: String): FileEntry = withContext(Dispatchers.IO) {
+        val renamed = DocumentsContract.renameDocument(resolver, documentUri(entry), newName)
+        val id = renamed?.let(DocumentsContract::getDocumentId) ?: entry.id
+        val actualName = queryDisplayName(id) ?: newName
+        val parentPath = entry.path.substringBeforeLast('/', "")
+        entry.copy(id = id, name = actualName, path = if (parentPath.isEmpty()) actualName else "$parentPath/$actualName")
+    }
+
+    override suspend fun delete(entry: FileEntry) = withContext(Dispatchers.IO) {
+        if (!DocumentsContract.deleteDocument(resolver, documentUri(entry))) {
+            throw IOException("Tidak bisa menghapus ${entry.name}")
+        }
     }
 
     private fun openForOverwrite(uri: Uri): OutputStream {

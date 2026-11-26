@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            style="@style/Onecdx.FieldLabel"
+            android:text="@string/field_name" />
+
+        <EditText
+            android:id="@+id/profile_name"
+            style="@style/Onecdx.Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_profile_name"
+            android:imeOptions="actionNext|flagNoExtractUi"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Onecdx.FieldLabel"
+                    android:text="@string/field_host" />
+
+                <EditText
+                    android:id="@+id/profile_host"
+                    style="@style/Onecdx.Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_host"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="textUri|textNoSuggestions" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Onecdx.FieldLabel"
+                    android:text="@string/field_port" />
+
+                <EditText
+                    android:id="@+id/profile_port"
+                    style="@style/Onecdx.Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_port"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="number" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/Onecdx.FieldLabel"
+            android:text="@string/field_username" />
+
+        <EditText
+            android:id="@+id/profile_username"
+            style="@style/Onecdx.Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_username"
+            android:imeOptions="actionNext|flagNoExtractUi"
+            android:inputType="textNoSuggestions|textVisiblePassword" />
+
+        <TextView
+            style="@style/Onecdx.FieldLabel"
+            android:text="@string/field_auth" />
+
+        <RadioGroup
+            android:id="@+id/profile_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/profile_auth_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_password"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/profile_auth_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/auth_key"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/profile_password_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Onecdx.FieldLabel"
+                android:text="@string/field_password" />
+
+            <EditText
+                android:id="@+id/profile_password"
+                style="@style/Onecdx.Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:imeOptions="actionNext|flagNoExtractUi"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/profile_key_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/Onecdx.FieldLabel"
+                android:text="@string/field_private_key" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/profile_key_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="middle"
+                    android:fontFamily="monospace"
+                    android:singleLine="true"
+                    android:text="@string/no_key_selected"
+                    android:textColor="@color/text_muted"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/profile_pick_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_button_secondary"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/pick_key"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/Onecdx.FieldLabel"
+                android:text="@string/field_passphrase" />
+
+            <EditText
+                android:id="@+id/profile_passphrase"
+                style="@style/Onecdx.Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_passphrase"
+                android:imeOptions="actionNext|flagNoExtractUi"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/Onecdx.FieldLabel"
+            android:text="@string/field_remote_path" />
+
+        <EditText
+            android:id="@+id/profile_remote_path"
+            style="@style/Onecdx.Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_remote_path"
+            android:imeOptions="actionNext|flagNoExtractUi"
+            android:inputType="textUri|textNoSuggestions"
+            android:fontFamily="monospace" />
+
+        <LinearLayout
+            android:id="@+id/profile_host_key_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profile_host_key"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/profile_forget_host_key"
+                style="@style/Onecdx.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:text="@string/forget_host_key"
+                android:textColor="@color/accent_text"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/profile_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text_muted"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

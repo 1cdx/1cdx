@@ -19,6 +19,8 @@ class ShortcutsTest {
         assertEquals(Command.TOGGLE_PANEL, ctrl(KeyEvent.KEYCODE_GRAVE))
         assertEquals(Command.NEXT_TAB, ctrl(KeyEvent.KEYCODE_TAB))
         assertEquals(Command.PREVIOUS_TAB, ctrl(KeyEvent.KEYCODE_TAB, shift = true))
+        assertEquals(Command.OPEN_FOLDER, ctrl(KeyEvent.KEYCODE_O))
+        assertEquals(Command.SERVERS, ctrl(KeyEvent.KEYCODE_O, shift = true))
     }
 
     @Test

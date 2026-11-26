@@ -22,15 +22,66 @@
             android:background="@color/bg_sidebar"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingStart="16dp"
-                android:paddingEnd="8dp"
-                android:text="@string/explorer"
-                android:textColor="@color/text_muted"
-                android:textSize="11sp" />
+                android:paddingEnd="6dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/explorer"
+                    android:textColor="@color/text_muted"
+                    android:textSize="11sp" />
+
+                <ImageButton
+                    android:id="@+id/explorer_new_file"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/bg_row"
+                    android:contentDescription="@string/new_file"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_new_file"
+                    android:tooltipText="@string/new_file" />
+
+                <ImageButton
+                    android:id="@+id/explorer_new_folder"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/bg_row"
+                    android:contentDescription="@string/new_folder"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_new_folder"
+                    android:tooltipText="@string/new_folder" />
+
+                <ImageButton
+                    android:id="@+id/explorer_refresh"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/bg_row"
+                    android:contentDescription="@string/menu_refresh"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_refresh"
+                    android:tooltipText="@string/menu_refresh" />
+
+                <ImageButton
+                    android:id="@+id/explorer_remote"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/bg_row"
+                    android:contentDescription="@string/servers"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_server"
+                    android:tooltipText="@string/servers" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/workspace_title"
@@ -85,6 +136,27 @@
                         android:textAllCaps="false"
                         android:textColor="@color/text_bright"
                         android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/explorer_connect"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_button_secondary"
+                        android:stateListAnimator="@null"
+                        android:text="@string/connect_server"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/explorer_connecting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
@@ -302,6 +374,20 @@
                         android:text="@string/open_folder"
                         android:textAllCaps="false"
                         android:textColor="@color/text_bright"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/welcome_connect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_button_secondary"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/connect_server"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_primary"
                         android:textSize="13sp" />
 
                     <TextView
