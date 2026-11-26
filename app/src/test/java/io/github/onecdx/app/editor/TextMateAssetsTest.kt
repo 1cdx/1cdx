@@ -55,7 +55,11 @@ class TextMateAssetsTest {
             val grammar = registry.addGrammar(IGrammarSource.fromFile(File(assets, entry.grammar)))
             assertEquals(entry.scope, grammar.scopeName)
             val sample = samples[entry.name] ?: error("Tidak ada contoh kode untuk ${entry.name}")
-            val result = grammar.tokenizeLine(sample)
+            val result = try {
+                grammar.tokenizeLine(sample)
+            } catch (e: Throwable) {
+                throw AssertionError("Tokenisasi ${entry.name} gagal: $e", e)
+            }
             assertTrue("Tokenisasi ${entry.name} kosong", result.tokens.isNotEmpty())
         }
     }
